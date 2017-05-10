@@ -6,11 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77fe1237-c722-4c18-bf6a-1376b19a8fb0" name="Default" comment="Client Side&#10;&#10;Begin">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/controller/FXMLController.class" afterPath="$PROJECT_DIR$/target/classes/controller/FXMLController.class" />
+    <list default="true" id="77fe1237-c722-4c18-bf6a-1376b19a8fb0" name="Default" comment="Merge remote-tracking branch 'origin/FixClientSide' into FixClientSide&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/client/Client.java&#10;#&#9;src/main/java/controller/FXMLController.java&#10;#&#9;src/main/java/socket/client/SocketClient.java&#10;#&#9;src/main/java/socket/ms/MessageQueue.java&#10;#&#9;src/main/resources/Interface.fxml">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/EnterHead.fxml" afterPath="$PROJECT_DIR$/target/classes/EnterHead.fxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/Interface.fxml" afterPath="$PROJECT_DIR$/target/classes/Interface.fxml" />
     </list>
     <ignored path="ClientChat.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -85,6 +83,59 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="workspace.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-780">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1494419503543" expanded="true" signature="69400:69442" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69400:69460" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69400:69473" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69400:69488" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69523:72200" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69536:72185" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69590:69970" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69609:69955" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69718:69935" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69758:69901" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="69779:69879" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70020:70347" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70039:70332" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70134:70312" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70174:70278" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70195:70256" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70398:70663" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70417:70648" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70450:70628" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70490:70594" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70511:70572" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70706:71012" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70725:70997" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70799:70977" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70839:70943" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="70860:70921" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71063:71415" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71082:71400" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71163:71380" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71203:71346" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71224:71324" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71467:71732" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71486:71717" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71519:71697" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71559:71663" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71580:71641" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71780:72171" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71799:72156" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71877:72062" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71917:72028" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="71938:72006" ph="..." />
+                <marker date="1494419503543" expanded="true" signature="72080:72136" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="MessageQueue.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/socket/ms/MessageQueue.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -152,7 +203,6 @@
         <option value="$PROJECT_DIR$/src/main/java/controller/EnterHEAD.java" />
         <option value="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
         <option value="$PROJECT_DIR$/ChatServer.iml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/mySocketClient/UsersOnline.java" />
         <option value="$PROJECT_DIR$/src/main/java/view/ChatView.java" />
         <option value="$PROJECT_DIR$/src/main/java/client/status/Client.java" />
@@ -166,6 +216,8 @@
         <option value="$PROJECT_DIR$/src/main/java/client/Client.java" />
         <option value="$PROJECT_DIR$/src/main/java/controller/FXMLController.java" />
         <option value="$PROJECT_DIR$/src/main/java/socket/client/SocketClient.java" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -891,11 +943,19 @@
       <option name="project" value="LOCAL" />
       <updated>1494418857591</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Merge remote-tracking branch 'origin/FixClientSide' into FixClientSide&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/client/Client.java&#10;#&#9;src/main/java/controller/FXMLController.java&#10;#&#9;src/main/java/socket/client/SocketClient.java&#10;#&#9;src/main/java/socket/ms/MessageQueue.java&#10;#&#9;src/main/resources/Interface.fxml">
+      <created>1494419250913</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1494419250913</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -919,7 +979,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296582" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26119402" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26119402" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -963,7 +1023,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Client Side&#10;&#10;Begin" />
-    <option name="LAST_COMMIT_MESSAGE" value="Client Side&#10;&#10;Begin" />
+    <MESSAGE value="Merge remote-tracking branch 'origin/FixClientSide' into FixClientSide&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/client/Client.java&#10;#&#9;src/main/java/controller/FXMLController.java&#10;#&#9;src/main/java/socket/client/SocketClient.java&#10;#&#9;src/main/java/socket/ms/MessageQueue.java&#10;#&#9;src/main/resources/Interface.fxml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/FixClientSide' into FixClientSide&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/client/Client.java&#10;#&#9;src/main/java/controller/FXMLController.java&#10;#&#9;src/main/java/socket/client/SocketClient.java&#10;#&#9;src/main/java/socket/ms/MessageQueue.java&#10;#&#9;src/main/resources/Interface.fxml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -976,7 +1037,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/javafx-src.zip!/com/sun/javafx/application/PlatformImpl.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/javafx-src.zip!/javafx/application/Platform.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/javafx-src.zip!/javafx/beans/value/ObservableObjectValue.java" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_31/javafx-src.zip!/javafx/beans/property/StringProperty.java" />
@@ -1221,6 +1281,57 @@
         <state relative-caret-position="-1260">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-780">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1494419503543" expanded="true" signature="69400:69442" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69400:69460" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69400:69473" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69400:69488" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69523:72200" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69536:72185" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69590:69970" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69609:69955" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69718:69935" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69758:69901" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="69779:69879" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70020:70347" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70039:70332" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70134:70312" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70174:70278" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70195:70256" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70398:70663" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70417:70648" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70450:70628" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70490:70594" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70511:70572" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70706:71012" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70725:70997" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70799:70977" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70839:70943" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="70860:70921" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71063:71415" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71082:71400" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71163:71380" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71203:71346" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71224:71324" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71467:71732" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71486:71717" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71519:71697" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71559:71663" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71580:71641" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71780:72171" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71799:72156" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71877:72062" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71917:72028" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="71938:72006" ph="..." />
+            <marker date="1494419503543" expanded="true" signature="72080:72136" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
