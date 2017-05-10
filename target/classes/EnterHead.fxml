@@ -5,25 +5,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="169.0" prefWidth="369.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EnterHEAD">
-   <children>
-      <Pane prefHeight="552.0" prefWidth="641.0" styleClass="background" stylesheets="@css.css">
-         <children>
-            <TextField fx:id="userName" layoutX="115.0" layoutY="13.0" prefHeight="31.0" prefWidth="157.0" text="your name" />
-            <Button layoutX="24.0" layoutY="122.0" mnemonicParsing="false" onAction="#connect" styleClass="Button" text="Send" />
-            <Label layoutX="24.0" layoutY="11.0" text="Login :">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="userPASS" layoutX="115.0" layoutY="69.0" prefHeight="31.0" prefWidth="157.0" text="pass" />
-            <Label layoutX="24.0" layoutY="60.0" text="Pass :">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
+<GridPane alignment="center" hgap="10" prefHeight="169.0" prefWidth="369.0" vgap="10" xmlns="http://javafx.com/javafx/8"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EnterHEAD">
+    <children>
+        <Pane prefHeight="552.0" prefWidth="641.0" styleClass="background" stylesheets="@css.css">
+            <children>
+                <TextField fx:id="userName" layoutX="115.0" layoutY="13.0" prefHeight="31.0" prefWidth="157.0"
+                           text="your name"/>
+                <Button layoutX="24.0" layoutY="122.0" mnemonicParsing="false" onAction="#connect" styleClass="Button"
+                        text="Send"/>
+                <Label layoutX="24.0" layoutY="11.0" text="Login :">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="userPASS" layoutX="115.0" layoutY="69.0" prefHeight="31.0" prefWidth="157.0"
+                           text="pass"/>
+                <Label layoutX="24.0" layoutY="60.0" text="Pass :">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
 
-         </children>
-      </Pane>
-   </children>
+            </children>
+        </Pane>
+    </children>
 </GridPane>
