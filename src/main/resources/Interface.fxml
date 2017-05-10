@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLController">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLController">
    <children>
-      <Pane prefHeight="552.0" prefWidth="641.0" styleClass="background" stylesheets="@css.css">
+      <Pane prefHeight="489.0" prefWidth="641.0" styleClass="background" stylesheets="@css.css">
          <children>
             <TextArea fx:id="getMessages" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0" prefWidth="386.0" />
-            <TextArea fx:id="sendMessage" layoutX="22.0" layoutY="356.0" onKeyPressed="#pressEnter" prefHeight="119.0" prefWidth="386.0" text="Type your message here ..." />
+            <TextArea fx:id="sendMessage" layoutX="22.0" layoutY="356.0" onKeyPressed="#pressEnter" prefHeight="119.0" prefWidth="386.0" promptText="Type your message here ..." />
             <TextArea fx:id="connectedUsers" editable="false" layoutX="418.0" layoutY="57.0" prefHeight="373.0" prefWidth="200.0" />
-            <TextField fx:id="userName" layoutX="417.0" layoutY="11.0" text="your name" />
+            <TextField fx:id="userName" layoutX="417.0" layoutY="11.0" promptText="your name" />
             <Button layoutX="418.0" layoutY="440.0" mnemonicParsing="false" onAction="#sendMessage" styleClass="Button" text="Send" />
-            <Button layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#connectToServer" styleClass="Button" text="Connect to the Server" />
-            <Button layoutX="161.0" layoutY="14.0" mnemonicParsing="false" onAction="#disConnect" styleClass="Button" text="Disconnect" />
-            <Button fx:id="smileButton" layoutX="418.0" layoutY="500.0" mnemonicParsing="false" onAction="#smiles" prefHeight="33.0" prefWidth="33.0" />
-            <TextFlow fx:id="smileField" layoutX="468.0" layoutY="441.0" prefHeight="82.0" prefWidth="152.0" style="-fx-background-color: #fff;" />
-            <TextFlow fx:id="textAndSm" layoutX="22.0" layoutY="484.0" prefHeight="63.0" prefWidth="386.0" style="-fx-background-color: #fff;" />
+            <Button layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#connect" styleClass="Button" text="Connect to the Server" />
+            <Button layoutX="161.0" layoutY="14.0" mnemonicParsing="false" onAction="#disconnect" styleClass="Button" text="Disconnect" />
             <Label layoutX="337.0" layoutY="10.0" text="Login :">
                <font>
                   <Font size="24.0" />
@@ -26,4 +30,10 @@
          </children>
       </Pane>
    </children>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>
