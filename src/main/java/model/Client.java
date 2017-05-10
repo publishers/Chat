@@ -1,6 +1,6 @@
-package client;
+package model;
 
-import client.status.StatusClient;
+import model.status.StatusClient;
 
 import java.io.Serializable;
 
@@ -8,9 +8,8 @@ import java.io.Serializable;
  * @author Serhii_Malykhin
  */
 public class Client implements Serializable {
-
+    public static final long serialVersionUID = 0l;
     private StatusClient status;
-    private String message;
     private final String userName;
 
     public Client(String userNick) {
@@ -24,14 +23,6 @@ public class Client implements Serializable {
 
     public void setStatus(StatusClient status) {
         this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getUserName() {

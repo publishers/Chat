@@ -1,6 +1,6 @@
 package socket.ms;
 
-import client.Client;
+import model.Client;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

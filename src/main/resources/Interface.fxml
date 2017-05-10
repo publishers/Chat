@@ -14,7 +14,7 @@
     <children>
         <Pane prefHeight="489.0" prefWidth="641.0" styleClass="background" stylesheets="@css.css">
             <children>
-                <TextArea fx:id="getMessages" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0"
+                <TextArea fx:id="showMessagesDialog" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0"
                           prefWidth="386.0"/>
                 <TextArea fx:id="sendMessage" layoutX="22.0" layoutY="356.0" onKeyPressed="#pressEnter"
                           prefHeight="119.0" prefWidth="386.0" promptText="Type your message here ..."/>
