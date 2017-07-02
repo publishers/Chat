@@ -12,11 +12,25 @@ import java.util.List;
 public class ClientActionListener {
     private List<ClientListener> clientListeners;
 
-    public ClientActionListener() {
+    private static ClientActionListener listener;
+
+    private ClientActionListener() {
         clientListeners = Collections.synchronizedList(clientListeners);
     }
 
-    public void sendMessage(Message message) {
+    public synchronized static ClientActionListener newInstance(){
+        if(listener == null){
+            listener = new ClientActionListener();
+        }
+        return listener;
+    }
+
+    public synchronized void sendMessage(Message message) {
         clientListeners.forEach(client -> client.sendMessage(message));
     }
+
+    public void add(ClientListener clientListener){
+        clientListeners.add(clientListener);
+    }
+
 }
