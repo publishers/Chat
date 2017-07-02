@@ -63,7 +63,7 @@ public class SocketClient {
             if (obj instanceof Client) {
                 client = (Client) obj;
             }
-            new ClientListener(socket, client, queueSendMessages).start();
+            ClientListener.newInstance(socket, client).start();
         } catch (IOException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Connection error");
             System.err.println("Error: " + e.getMessage());

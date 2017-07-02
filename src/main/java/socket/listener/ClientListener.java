@@ -18,10 +18,15 @@ public class ClientListener extends Thread{
     private InputStream in = null;
     private OutputStream out = null;
     private MessageTransfer messageListener;
-    public ClientListener(Socket socketClient, Client client) {
+
+    private ClientListener(Socket socketClient, Client client) {
         this.socket = socketClient;
         this.client = client;
-        this.messageListener = MessageTransfer.getInstance();
+        this.messageListener = MessageTransfer.newInstance();
+    }
+
+    public static ClientListener newInstance(Socket socketClient, Client client){
+        return new ClientListener(socketClient, client);
     }
 
 

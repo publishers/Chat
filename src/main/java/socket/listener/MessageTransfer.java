@@ -16,7 +16,7 @@ public class MessageTransfer {
 
     private static MessageTransfer messageTransfer;
 
-    public static MessageTransfer getInstance() {
+    public static MessageTransfer newInstance() {
         if(isNull(messageTransfer)){
             messageTransfer = new MessageTransfer();
         }
