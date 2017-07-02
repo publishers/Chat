@@ -14,6 +14,7 @@ import model.Message;
 import socket.client.SocketClient;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
@@ -66,12 +67,13 @@ public class FXMLController implements Initializable {
         } else if (event.getCode() == KeyCode.ENTER) {
             //TODO send Message
             message = new Message(sendMessage.getText());
+            queueSendMessages.add(message);
             System.out.println("Message: " + message.getMessage());
         }
     }
 
     @FXML
-    private void disconnect(ActionEvent actionEvent) {
+    private void disconnect(ActionEvent actionEvent) throws IOException {
         if (socketClient != null) {
             socketClient.disConnect();
         }
