@@ -2,6 +2,9 @@ package server;
 
 import model.Client;
 import model.status.StatusClient;
+import server.control.ClientControl;
+import server.listener.ClientActionListener;
+import server.response.ClientListener;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -30,19 +33,20 @@ public class SocketServer extends Thread{
             System.err.println("Cannot establish connection. Server may not be up." + e.getMessage());
         }
 
-        Socket socket = null;
-
+        ClientControl clientControl = ClientControl.newInstance();
         while (true) {
             try {
                 System.out.println("Wait1 ... ");
-                socket = serverSocket.accept();
+                Socket socket = serverSocket.accept();
 
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
                 Object obj = in.readObject();
                 if(obj instanceof Client) {
-                    out.writeObject(changeStatusClient((Client) obj));
+                    Client client = (Client) obj;
+                    out.writeObject(changeStatusClient(client));
+                    ClientListener.newInstance(client, socket, ClientActionListener.newInstance());
                 }
 
 
