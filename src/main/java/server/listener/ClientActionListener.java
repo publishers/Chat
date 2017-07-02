@@ -4,6 +4,7 @@ import model.Message;
 import server.response.ClientListener;
 
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class ClientActionListener {
     private static ClientActionListener listener;
 
     private ClientActionListener() {
-        clientListeners = Collections.synchronizedList(clientListeners);
+        clientListeners = Collections.synchronizedList(new LinkedList<>());
     }
 
     public synchronized static ClientActionListener newInstance(){

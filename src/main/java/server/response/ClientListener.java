@@ -24,12 +24,11 @@ public class ClientListener extends Thread{
         this.socket = socket;
         this.actionListener = actionListener;
         actionListener.add(this);
-        init();
     }
 
     private void init() throws IOException {
-        in = new ObjectInputStream(socket.getInputStream());
         out = new ObjectOutputStream(socket.getOutputStream());
+        in = new ObjectInputStream(socket.getInputStream());
     }
 
     public static ClientListener newInstance(Client client, Socket socket, ClientActionListener actionListener){
@@ -65,7 +64,7 @@ public class ClientListener extends Thread{
     @Override
     public void run() {
         try {
-
+            init();
             while(socket.isConnected()){
                 Object obj = in.readObject();
                 if(obj instanceof Message) {

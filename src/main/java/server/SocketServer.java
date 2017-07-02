@@ -2,7 +2,6 @@ package server;
 
 import model.Client;
 import model.status.StatusClient;
-import server.control.ClientControl;
 import server.listener.ClientActionListener;
 import server.response.ClientListener;
 
@@ -33,7 +32,6 @@ public class SocketServer extends Thread{
             System.err.println("Cannot establish connection. Server may not be up." + e.getMessage());
         }
 
-        ClientControl clientControl = ClientControl.newInstance();
         while (true) {
             try {
                 System.out.println("Wait1 ... ");
@@ -44,14 +42,19 @@ public class SocketServer extends Thread{
 
                 Object obj = in.readObject();
                 if(obj instanceof Client) {
+                    System.out.println("Here connected new Client");
                     Client client = (Client) obj;
                     out.writeObject(changeStatusClient(client));
-                    ClientListener.newInstance(client, socket, ClientActionListener.newInstance());
+                    System.out.println("Status client was changed");
+                    ClientListener
+                            .newInstance(client, socket, ClientActionListener.newInstance())
+                            .start();
                 }
 
 
             } catch (Exception e) {
-                System.err.println("SocketServer 1");
+                System.err.println("SocketServer " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }
