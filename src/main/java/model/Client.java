@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Client implements Serializable {
     public static final long serialVersionUID = 0l;
     private StatusClient status;
-    private final String userName;
+    private String userName;
 
     public Client(String userNick) {
         this.userName = userNick;
@@ -27,5 +27,13 @@ public class Client implements Serializable {
 
     public String getUserName() {
         return userName;
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "status=" + status +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }

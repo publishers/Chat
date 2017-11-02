@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Message implements Serializable {
     public static final long serialVersionUID = 5l;
 
-    private final String message;
+    private String message;
 
     public Message(String message) {
         this.message = message;
@@ -16,5 +16,12 @@ public class Message implements Serializable {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "message='" + message + '\'' +
+                '}';
     }
 }

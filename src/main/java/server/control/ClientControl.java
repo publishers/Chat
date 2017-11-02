@@ -1,6 +1,6 @@
 package server.control;
 
-import server.response.ClientListener;
+import server.response.ServerClientListener;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author Serhii_Malykhin
  */
 public class ClientControl {
-    private List<ClientListener> listeners;
+    private List<ServerClientListener> listeners;
 
     private ClientControl(){
         listeners = new LinkedList<>();
@@ -19,16 +19,16 @@ public class ClientControl {
         return new ClientControl();
     }
 
-    public void add(ClientListener clientActionListener){
+    public void add(ServerClientListener clientActionListener){
         listeners.add(clientActionListener);
         clientActionListener.start();
     }
 
-    public ClientListener get(int i){
+    public ServerClientListener get(int i){
         return listeners.get(i);
     }
 
-    public List<ClientListener> getListeners() {
+    public List<ServerClientListener> getListeners() {
         return listeners;
     }
 }

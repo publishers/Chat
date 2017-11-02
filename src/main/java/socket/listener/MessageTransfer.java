@@ -17,7 +17,7 @@ public class MessageTransfer {
     private static MessageTransfer messageTransfer;
 
     public static MessageTransfer newInstance() {
-        if(isNull(messageTransfer)){
+        if (isNull(messageTransfer)) {
             messageTransfer = new MessageTransfer();
         }
         return messageTransfer;
@@ -31,6 +31,10 @@ public class MessageTransfer {
 
     public void queueSendMessageToServer(Message message) throws InterruptedException {
         queueMessagesSendToServer.put(message);
+    }
+
+    public Message queueGetMessageToServer() throws InterruptedException {
+        return queueMessagesSendToServer.take();
     }
 
     public Message queueGetMessageFromServer() throws InterruptedException {

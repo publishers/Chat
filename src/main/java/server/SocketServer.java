@@ -1,12 +1,8 @@
 package server;
 
-import model.Client;
-import model.status.StatusClient;
 import server.listener.ClientActionListener;
-import server.response.ClientListener;
+import server.response.ServerClientListener;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,7 +11,7 @@ import java.net.Socket;
  *
  * @author faheem
  */
-public class SocketServer extends Thread{
+public class SocketServer extends Thread {
     private static final Integer PORT = 10222;
 
     public static void main(String[] args) {
@@ -31,36 +27,24 @@ public class SocketServer extends Thread{
         } catch (Exception e) {
             System.err.println("Cannot establish connection. Server may not be up." + e.getMessage());
         }
-
+        ClientActionListener observer = ClientActionListener.newInstance();
         while (true) {
             try {
                 System.out.println("Wait1 ... ");
                 Socket socket = serverSocket.accept();
 
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                ServerClientListener serverClientListener = ServerClientListener.newInstance(socket, observer);
 
-                Object obj = in.readObject();
-                if(obj instanceof Client) {
-                    System.out.println("Here connected new Client");
-                    Client client = (Client) obj;
-                    out.writeObject(changeStatusClient(client));
-                    System.out.println("Status client was changed");
-                    ClientListener
-                            .newInstance(client, socket, ClientActionListener.newInstance())
-                            .start();
+                if (serverClientListener != null) {
+                    serverClientListener.start();
+                } else {
+                    System.err.println("Something was wrong with socket");
                 }
-
-
+                System.out.println("Added new Client!");
             } catch (Exception e) {
                 System.err.println("SocketServer " + e.getMessage());
                 e.printStackTrace();
             }
         }
-    }
-
-    private Client changeStatusClient(Client client){
-        client.setStatus(StatusClient.CONNECT);
-        return client;
     }
 }

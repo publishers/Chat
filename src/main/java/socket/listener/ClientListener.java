@@ -4,9 +4,7 @@ import model.Client;
 import model.Message;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -15,39 +13,35 @@ import java.net.Socket;
 public class ClientListener extends Thread{
     private Socket socket;
     private Client client;
-    private InputStream in = null;
-    private OutputStream out = null;
+    private ObjectInputStream in = null;
     private MessageTransfer messageListener;
 
-    private ClientListener(Socket socketClient, Client client) {
-        this.socket = socketClient;
+    private ClientListener(ObjectInputStream inputStream, Client client) {
         this.client = client;
+        this.in = inputStream;
         this.messageListener = MessageTransfer.newInstance();
     }
 
-    public static ClientListener newInstance(Socket socketClient, Client client){
-        return new ClientListener(socketClient, client);
-    }
-
-
-    private void init() throws IOException {
-        out = socket.getOutputStream();
-        in = socket.getInputStream();
+    public static ClientListener newInstance(ObjectInputStream inputStream, Client client){
+        return new ClientListener(inputStream, client);
     }
 
     @Override
     public void run() {
         try {
-            init();
-            while (!socket.isConnected()) {
-                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-                Object obj = in.readObject();
+            Object obj;
+            while ((obj = in.readObject()) != null) {
+                System.out.println("listener.ClientListener read object typeName: " + obj.getClass().getTypeName());
                 if(obj instanceof Message) {
                     messageListener.queueGetMessageFromServer((Message)obj);
+                    System.out.println("send message to queue " + obj);
+                } else {
+
                 }
             }
+            System.out.println("ClientListener is out.");
         }catch (IOException|ClassNotFoundException|InterruptedException e){
-            System.err.println("ClientListener Error: " + e.getLocalizedMessage());
+            System.err.println("ClientListener Error: " + e.getMessage());
         }
     }
 }

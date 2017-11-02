@@ -1,7 +1,7 @@
 package server.listener;
 
 import model.Message;
-import server.response.ClientListener;
+import server.response.ServerClientListener;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -11,12 +11,12 @@ import java.util.List;
  * @author Serhii_Malykhin
  */
 public class ClientActionListener {
-    private List<ClientListener> clientListeners;
+    private List<ServerClientListener> serverClientListeners;
 
     private static ClientActionListener listener;
 
     private ClientActionListener() {
-        clientListeners = Collections.synchronizedList(new LinkedList<>());
+        serverClientListeners = Collections.synchronizedList(new LinkedList<>());
     }
 
     public synchronized static ClientActionListener newInstance(){
@@ -27,11 +27,27 @@ public class ClientActionListener {
     }
 
     public synchronized void sendMessage(Message message) {
-        clientListeners.forEach(client -> client.sendMessage(message));
+        List<ServerClientListener> unConnectedClients = new LinkedList<>();
+        serverClientListeners.forEach(client -> {
+            if(!client.getSocket().isClosed()) {
+                System.out.println("send message to: " + client);
+                client.sendMessage(message);
+            } else {
+                System.out.println("Client unconnected, cannot send message to: " + client);
+                unConnectedClients.add(client);
+            }
+        });
+        unConnectedClients.forEach(client -> {
+            System.out.println("unconnected: " + client);
+            if(serverClientListeners.contains(client)){
+                serverClientListeners.remove(client);
+            }
+        });
     }
 
-    public void add(ClientListener clientListener){
-        clientListeners.add(clientListener);
+    public void add(ServerClientListener serverClientListener){
+        System.out.println("client was added: " + serverClientListener.getName());
+        serverClientListeners.add(serverClientListener);
     }
 
 }

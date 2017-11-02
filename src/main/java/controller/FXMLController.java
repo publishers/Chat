@@ -1,6 +1,5 @@
 package controller;
 
-import model.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import model.Client;
 import model.Message;
 import socket.client.SocketClient;
 
@@ -53,6 +53,21 @@ public class FXMLController implements Initializable {
 
         sendMessage.setWrapText(true);
         showMessagesDialog.setWrapText(true);
+        init();
+    }
+
+    private void init() {
+        Thread thread = new Thread(()->{
+        while(true){
+            try {
+                Message message = queueGetMessages.take();
+                showMessagesDialog.setText(showMessagesDialog.getText() + System.lineSeparator() + message.getMessage());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }});
+        thread.setDaemon(true);
+        thread.start();
     }
 
     /**
@@ -65,11 +80,17 @@ public class FXMLController implements Initializable {
             sendMessage.setText(String.valueOf(sb));
             sendMessage.positionCaret(sendMessage.getText().length());
         } else if (event.getCode() == KeyCode.ENTER) {
-            //TODO send Message
             message = new Message(sendMessage.getText());
             queueSendMessages.add(message);
-            System.out.println("Message: " + message.getMessage());
         }
+    }
+
+    private boolean isConnect() {
+        if (socketClient == null || socketClient.getSocket().isClosed()) {
+            JOptionPane.showMessageDialog(null, "You can't send message something wrong with connection!");
+            return false;
+        }
+        return true;
     }
 
     @FXML
@@ -85,7 +106,6 @@ public class FXMLController implements Initializable {
         if (isUserNickCorrect(userName)) {
             client = new Client(userName);
             doConnection(client);
-            System.out.println("Connect is ready");
         } else {
             JOptionPane.showMessageDialog(null, "You have bad userName '" + userName + "'");
         }
@@ -93,7 +113,7 @@ public class FXMLController implements Initializable {
 
     private void doConnection(Client client) {
         socketClient = new SocketClient(client, queueSendMessages, queueGetMessages);
-        socketClient.run();
+        socketClient.start();
     }
 
     private boolean isUserNickCorrect(String userName) {
@@ -102,8 +122,9 @@ public class FXMLController implements Initializable {
 
     @FXML
     private void sendMessage(ActionEvent actionEvent) {
-        if(isMessageCorrect(sendMessage.getText())){
-            queueSendMessages.add(new Message(sendMessage.getText()));
+        if (isMessageCorrect(sendMessage.getText())) {
+//            System.out.println("Send new message:  " + sendMessage.getText());
+//            queueSendMessages.add(new Message(sendMessage.getText()));
         } else {
             JOptionPane.showMessageDialog(null, "Your message is not correct!");
         }
