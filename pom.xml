@@ -16,7 +16,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>view.ChatView</mainClass>
+                            <mainClass>com.chat.view.ChatView</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

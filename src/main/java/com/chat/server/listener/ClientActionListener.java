@@ -1,7 +1,7 @@
-package server.listener;
+package com.chat.server.listener;
 
-import model.Message;
-import server.response.ServerClientListener;
+import com.chat.model.Message;
+import com.chat.server.response.ServerClientListener;
 
 import java.util.Collections;
 import java.util.LinkedList;

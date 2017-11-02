@@ -1,7 +1,7 @@
-package server;
+package com.chat.server;
 
-import server.listener.ClientActionListener;
-import server.response.ServerClientListener;
+import com.chat.server.listener.ClientActionListener;
+import com.chat.server.response.ServerClientListener;
 
 import java.net.ServerSocket;
 import java.net.Socket;

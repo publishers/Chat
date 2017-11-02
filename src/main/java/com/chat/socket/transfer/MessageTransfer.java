@@ -1,6 +1,6 @@
-package socket.transfer;
+package com.chat.socket.transfer;
 
-import model.Message;
+import com.chat.model.Message;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

@@ -1,9 +1,9 @@
-package server.response;
+package com.chat.server.response;
 
-import model.Client;
-import model.Message;
-import model.status.StatusClient;
-import server.listener.ClientActionListener;
+import com.chat.model.Client;
+import com.chat.model.Message;
+import com.chat.model.status.StatusClient;
+import com.chat.server.listener.ClientActionListener;
 
 import java.io.*;
 import java.net.Socket;

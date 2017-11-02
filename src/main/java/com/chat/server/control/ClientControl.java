@@ -1,6 +1,6 @@
-package server.control;
+package com.chat.server.control;
 
-import server.response.ServerClientListener;
+import com.chat.server.response.ServerClientListener;
 
 import java.util.LinkedList;
 import java.util.List;

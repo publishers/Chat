@@ -1,4 +1,4 @@
-package view;
+package com.chat.view;
 /**
  * Created by User on 29.01.15.
  */

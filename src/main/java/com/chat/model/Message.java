@@ -1,4 +1,4 @@
-package model;
+package com.chat.model;
 
 import java.io.Serializable;
 
@@ -8,10 +8,17 @@ import java.io.Serializable;
 public class Message implements Serializable {
     public static final long serialVersionUID = 5l;
 
+    private String sendTime;
+
     private String message;
 
-    public Message(String message) {
+    public Message(String message, String sendTime) {
         this.message = message;
+        this.sendTime = sendTime;
+    }
+
+    public String getSendTime() {
+        return sendTime;
     }
 
     public String getMessage() {
@@ -21,7 +28,8 @@ public class Message implements Serializable {
     @Override
     public String toString() {
         return "Message{" +
-                "message='" + message + '\'' +
-                '}';
+            "message='" + message + '\'' +
+            ", sendTime='" + sendTime + '\'' +
+            '}';
     }
 }

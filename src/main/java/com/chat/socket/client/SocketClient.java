@@ -1,7 +1,7 @@
-package socket.client;
+package com.chat.socket.client;
 
-import model.Client;
-import model.Message;
+import com.chat.model.Client;
+import com.chat.model.Message;
 
 import javax.swing.*;
 import java.io.IOException;

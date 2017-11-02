@@ -1,4 +1,4 @@
-package controller;
+package com.chat.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,13 +9,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import model.Client;
-import model.Message;
-import socket.client.SocketClient;
+import com.chat.model.Client;
+import com.chat.model.Message;
+import com.chat.socket.client.SocketClient;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -57,15 +58,16 @@ public class FXMLController implements Initializable {
     }
 
     private void init() {
-        Thread thread = new Thread(()->{
-        while(true){
-            try {
-                Message message = queueGetMessages.take();
-                showMessagesDialog.setText(showMessagesDialog.getText() + System.lineSeparator() + message.getMessage());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        Thread thread = new Thread(() -> {
+            while (true) {
+                try {
+                    Message message = queueGetMessages.take();
+                    showMessagesDialog.setText(showMessagesDialog.getText() + System.lineSeparator() + message.getMessage());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }});
+        });
         thread.setDaemon(true);
         thread.start();
     }
@@ -80,7 +82,7 @@ public class FXMLController implements Initializable {
             sendMessage.setText(String.valueOf(sb));
             sendMessage.positionCaret(sendMessage.getText().length());
         } else if (event.getCode() == KeyCode.ENTER) {
-            message = new Message(sendMessage.getText());
+            message = new Message(sendMessage.getText(), new Date().toString());
             queueSendMessages.add(message);
         }
     }
@@ -112,8 +114,10 @@ public class FXMLController implements Initializable {
     }
 
     private void doConnection(Client client) {
-        socketClient = new SocketClient(client, queueSendMessages, queueGetMessages);
-        socketClient.start();
+        if (!isConnect()) {
+            socketClient = new SocketClient(client, queueSendMessages, queueGetMessages);
+            socketClient.start();
+        }
     }
 
     private boolean isUserNickCorrect(String userName) {

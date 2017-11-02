@@ -1,6 +1,6 @@
-package model;
+package com.chat.model;
 
-import model.status.StatusClient;
+import com.chat.model.status.StatusClient;
 
 import java.io.Serializable;
 
