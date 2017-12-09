@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: com.chat.view.ChatView
-Main-Class: com.chat.server.SocketServer
-

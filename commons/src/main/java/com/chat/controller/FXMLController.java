@@ -25,6 +25,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Created by User on 29.01.15.
  */
 public class FXMLController implements Initializable {
+    private static final int sizeText = 12;
+
     @FXML
     public TextArea connectedUsers;
     @FXML
@@ -40,7 +42,6 @@ public class FXMLController implements Initializable {
     private BlockingQueue<Message> queueGetMessages;
     private BlockingQueue<Message> queueSendMessages;
 
-    private int sizeText = 12;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -82,8 +83,7 @@ public class FXMLController implements Initializable {
             sendMessage.setText(String.valueOf(sb));
             sendMessage.positionCaret(sendMessage.getText().length());
         } else if (event.getCode() == KeyCode.ENTER) {
-            message = new Message(sendMessage.getText(), new Date().toString());
-            queueSendMessages.add(message);
+            sendMessage();
         }
     }
 
@@ -96,14 +96,14 @@ public class FXMLController implements Initializable {
     }
 
     @FXML
-    private void disconnect(ActionEvent actionEvent) throws IOException {
+    private void disconnect() throws IOException {
         if (socketClient != null) {
             socketClient.disConnect();
         }
     }
 
     @FXML
-    private void connect(ActionEvent actionEvent) {
+    private void connect() {
         String userName = this.userName.getText();
         if (isUserNickCorrect(userName)) {
             client = new Client(userName);
@@ -121,20 +121,24 @@ public class FXMLController implements Initializable {
     }
 
     private boolean isUserNickCorrect(String userName) {
-        return userName.trim().matches("[A-Za-z0-9 ].*");
+        return userName.trim().matches("[A-Za-z0-9 ]{2,}");
     }
 
     @FXML
     private void sendMessage(ActionEvent actionEvent) {
         if (isMessageCorrect(sendMessage.getText())) {
-//            System.out.println("Send new message:  " + sendMessage.getText());
-//            queueSendMessages.add(new Message(sendMessage.getText()));
+            sendMessage();
         } else {
             JOptionPane.showMessageDialog(null, "Your message is not correct!");
         }
     }
 
+    private void sendMessage() {
+        message = new Message(sendMessage.getText(), new Date().toString());
+        queueSendMessages.add(message);
+    }
+
     private boolean isMessageCorrect(String text) {
-        return !text.trim().isEmpty();
+        return text != null && !text.trim().isEmpty();
     }
 }
