@@ -1,13 +1,15 @@
 package com.chat.server.listener;
 
-import com.chat.model.Message;
+import com.chat.model.Client;
 import com.chat.server.response.ClientListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Serhii_Malykhin
@@ -30,29 +32,28 @@ public class CommonClientListener {
         return listener;
     }
 
-    public synchronized void sendMessage(Message message) {
-        List<ClientListener> unConnectedClients = new LinkedList<>();
+    public synchronized void sendMessage(Object object) {
 
         clientListeners.forEach(client -> {
-            if (!client.getSocket().isClosed()) {
-                LOG.info("send message to: " + client);
-                client.sendMessage(message);
+            if (object instanceof Client) {
+                client.sendMessage(buildClientList());
             } else {
-                LOG.info("Client unconnected, cannot send message to: " + client);
-                unConnectedClients.add(client);
-            }
-        });
-
-        unConnectedClients.forEach(client -> {
-            LOG.info("unconnected: " + client);
-            if (clientListeners.contains(client)) {
-                clientListeners.remove(client);
+                client.sendMessage(object);
             }
         });
     }
 
-    public void add(ClientListener clientListener) {
-        LOG.info("client was added: " + clientListener.getName());
+    private List<Client> buildClientList() {
+        return clientListeners.stream()
+                .map(ClientListener::getClient)
+                .collect(Collectors.toList());
+    }
+
+    public synchronized void removeClientListener(ClientListener clientListener) {
+        clientListeners.remove(clientListener);
+    }
+
+    public synchronized void add(ClientListener clientListener) {
         clientListeners.add(clientListener);
     }
 

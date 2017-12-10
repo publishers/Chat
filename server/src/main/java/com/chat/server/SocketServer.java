@@ -16,7 +16,7 @@ import java.net.Socket;
 public class SocketServer extends Thread {
     private static final Logger LOG = LoggerFactory.getLogger(SocketServer.class);
     private static final Integer PORT = 10222;
-
+    private static final CommonClientListener OBSERVER = CommonClientListener.newInstance();
     public static void main(String[] args) {
         new SocketServer().start();
     }
@@ -26,16 +26,13 @@ public class SocketServer extends Thread {
         ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(PORT);
-
-            CommonClientListener observer = CommonClientListener.newInstance();
-            while (true) {
+            while (!serverSocket.isClosed()) {
                 try {
                     LOG.info("Wait1 ... ");
                     Socket socket = serverSocket.accept();
 
-                    ClientListener clientListener = ClientListener.newInstance(socket, observer);
+                    ClientListener clientListener = ClientListener.newInstance(socket, OBSERVER);
                     clientListener.start();
-                    LOG.info("Added new Client!");
                 } catch (Exception e) {
                     LOG.error("SocketServer: {}", e.getMessage());
                     e.printStackTrace();

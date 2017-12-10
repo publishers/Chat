@@ -1,8 +1,7 @@
 package com.chat.server.response;
 
 import com.chat.model.Client;
-import com.chat.model.Message;
-import com.chat.model.status.StatusClient;
+import com.chat.model.StatusClient;
 import com.chat.server.listener.CommonClientListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,13 +17,13 @@ import java.net.Socket;
 public class ClientListener extends Thread {
     private static final Logger LOG = LoggerFactory.getLogger(ClientListener.class);
     private final Socket socket;
-    private final CommonClientListener actionListener;
+    private final CommonClientListener commonClientListener;
     private ObjectOutputStream outSendMessage;
+    private Client client;
 
-    private ClientListener(Socket socket, CommonClientListener actionListener) {
+    private ClientListener(Socket socket, CommonClientListener commonClientListener) {
         this.socket = socket;
-        this.actionListener = actionListener;
-        actionListener.add(this);
+        this.commonClientListener = commonClientListener;
     }
 
     public Socket getSocket() {
@@ -35,48 +34,47 @@ public class ClientListener extends Thread {
         return new ClientListener(socket, observer);
     }
 
-    public void sendMessage(Message message) {
-        try {
-            outSendMessage.writeObject(message);
-            outSendMessage.flush();
-        } catch (IOException e) {
-            LOG.error(
-                    "Cannot send message: "
-                    + message + System.lineSeparator()
-                    +"Exception message: "
-                    + e.getMessage()
-            );
-        }
-    }
-
     @Override
     public void run() {
         try {
             ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-            outSendMessage = out;
+            outSendMessage = new ObjectOutputStream(socket.getOutputStream());
+            commonClientListener.add(this);
             while (!socket.isClosed()) {
                 Object obj = in.readObject();
                 if (obj instanceof Client) {
-                    Client client = (Client) obj;
-                    out.writeObject(changeStatusClient(client));
-                } else if (obj instanceof Message) {
-                    actionListener.sendMessage((Message) obj);
+                    client = (Client) obj;
                 }
+                LOG.info("new message: {}", obj);
+                commonClientListener.sendMessage(obj);
             }
-        } catch (IOException e) {
-            LOG.error("Bad Connection: {}", e.getMessage());
-        } catch (ClassNotFoundException e) {
-            LOG.error("Class not Found: {}", e.getMessage());
+        } catch (Exception e) {
+            LOG.info("Client was disconnected: {}", e.getMessage());
+            commonClientListener.removeClientListener(this);
+            commonClientListener.sendMessage(client);
         }
     }
 
-    private Client changeStatusClient(Client client) {
-        if (client.getStatus() == StatusClient.CONNECT) {
-            client.setStatus(StatusClient.DISCONNECT);
-        } else {
-            client.setStatus(StatusClient.CONNECT);
+    public void sendMessage(Object message) {
+        try {
+            outSendMessage.writeObject(message);
+            outSendMessage.flush();
+        } catch (IOException e) {
+            LOG.info(
+                    "Cannot send message: "
+                            + message + System.lineSeparator()
+                            + "Exception message: "
+                            + e.getMessage()
+            );
         }
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    private Client changeStatusClient(Client client) {
+        client.setStatus(StatusClient.CONNECT);
         return client;
     }
 }
