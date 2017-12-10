@@ -32,8 +32,7 @@ public class CommonClientListener {
         return listener;
     }
 
-    public synchronized void sendMessage(Object object) {
-
+    public void sendMessage(Object object) {
         clientListeners.forEach(client -> {
             if (object instanceof Client) {
                 client.sendMessage(buildClientList());
@@ -49,11 +48,11 @@ public class CommonClientListener {
                 .collect(Collectors.toList());
     }
 
-    public synchronized void removeClientListener(ClientListener clientListener) {
+    public void removeClientListener(ClientListener clientListener) {
         clientListeners.remove(clientListener);
     }
 
-    public synchronized void add(ClientListener clientListener) {
+    public void add(ClientListener clientListener) {
         clientListeners.add(clientListener);
     }
 

@@ -44,12 +44,13 @@ public class ClientListener extends Thread {
                 Object obj = in.readObject();
                 if (obj instanceof Client) {
                     client = (Client) obj;
+                    changeStatusClient(client);
                 }
                 LOG.info("new message: {}", obj);
                 commonClientListener.sendMessage(obj);
             }
         } catch (Exception e) {
-            LOG.info("Client was disconnected: {}", e.getMessage());
+            LOG.info("Client was disconnected: {}", client);
             commonClientListener.removeClientListener(this);
             commonClientListener.sendMessage(client);
         }

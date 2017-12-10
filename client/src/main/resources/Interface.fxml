@@ -9,12 +9,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chat.controller.FXMLController">
     <children>
-        <Pane prefHeight="489.0" prefWidth="641.0" styleClass="background" stylesheets="@css.css">
+        <Pane prefHeight="527.0" prefWidth="1124.0" styleClass="background" stylesheets="@css.css">
             <children>
                 <TextArea fx:id="showMessagesDialog" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0" prefWidth="386.0" />
+                <WebView fx:id="htmlMessageView" layoutX="635.0" layoutY="57.0" prefHeight="373.0" prefWidth="475.0" />
                 <TextArea fx:id="sendMessage" layoutX="22.0" layoutY="356.0" onKeyPressed="#pressEnter" prefHeight="119.0" prefWidth="386.0" promptText="Type your message here ..." />
                 <TextArea fx:id="connectedUsers" editable="false" layoutX="418.0" layoutY="57.0" prefHeight="373.0" prefWidth="200.0" />
                 <TextField fx:id="userName" layoutX="417.0" layoutY="11.0" prefHeight="32.0" prefWidth="200.0" promptText="your name" />

@@ -86,7 +86,7 @@ public class SocketClient extends Thread {
                 queueGetData.add(obj);
             }
         } catch (IOException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Connection was closed");
+            JOptionPane.showMessageDialog(null, "Connection was closed or unavailable. \nPlease check internet connection");
             LOG.info("info: {}", e.getMessage());
         }
     }

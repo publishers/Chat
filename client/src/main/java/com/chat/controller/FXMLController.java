@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.web.WebView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +41,8 @@ public class FXMLController implements Initializable {
     public TextArea showMessagesDialog;
     @FXML
     public TextField userName;
+    @FXML
+    public WebView htmlMessageView;
 
     private Client client;
     private Message message;
@@ -146,6 +149,8 @@ public class FXMLController implements Initializable {
     @FXML
     private void sendMessage() {
         String message = sendMessage.getText();
+        htmlMessageView.getEngine().loadContent(message);
+
         if (isMessageCorrect(message)) {
             sendMessage(message);
         } else {
@@ -173,11 +178,13 @@ public class FXMLController implements Initializable {
     }
 
     private void sendMessage(String messageText) {
-        if (socketClient != null || isConnect()) {
-            message = new Message(client.getUserName() + ": " +messageText.trim(), new Date().toString());
+        if (socketClient != null && socketClient.getSocket() != null) {
+            message = new Message(client.getUserName() + ": " + messageText.trim(), new Date().toString());
             queueSendData.add(message);
             sendMessage.setText("");
             sendMessage.positionCaret(0);
+        } else {
+            showMessagesDialog.setText("You need to connect");
         }
     }
 }
