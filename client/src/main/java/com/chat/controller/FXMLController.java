@@ -29,9 +29,9 @@ import java.util.stream.Collectors;
  * Created by User on 29.01.15.
  */
 public class FXMLController implements Initializable {
-    public static final Logger LOG = LoggerFactory.getLogger(FXMLController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FXMLController.class);
     private static final int sizeText = 12;
-    public static final String MESSAGE_DIVIDER = "/---------------------------/";
+    private static final String MESSAGE_DIVIDER = "/---------------------------/";
 
     @FXML
     public TextArea connectedUsers;
@@ -75,10 +75,6 @@ public class FXMLController implements Initializable {
                         Message message = (Message) obj;
                         showMessagesDialog.setText(updateTextArea(message));
                         builderMessageDialog.delete(0, builderMessageDialog.length());
-                    } else if (obj instanceof Client) {
-                        Client client = (Client) obj;
-                        String user = client.getUserName();
-                        connectedUsers.setText(user);
                     } else if (obj instanceof List) {
                         List<Client> clients = (List<Client>) obj;
                         String user = clients.stream()
@@ -98,9 +94,9 @@ public class FXMLController implements Initializable {
 
     private String updateTextArea(Message message) {
         return builderMessageDialog
-                .append(message.getMessage())
+                .append(message.getSendTime())
                 .append(System.lineSeparator())
-                .append(MESSAGE_DIVIDER)
+                .append(message.getMessage())
                 .append(System.lineSeparator())
                 .append(showMessagesDialog.getText().trim())
                 .append(System.lineSeparator())
@@ -138,7 +134,7 @@ public class FXMLController implements Initializable {
     }
 
     private void doConnection() {
-        if (socketClient == null || !isConnect()) {
+        if (socketClient == null || socketClient.getSocket() == null || !isConnect()) {
             socketClient = new SocketClient(queueSendData, queueGetData);
             socketClient.start();
         }
@@ -179,7 +175,7 @@ public class FXMLController implements Initializable {
 
     private void sendMessage(String messageText) {
         if (socketClient != null || isConnect()) {
-            message = new Message(messageText.trim(), new Date().toString());
+            message = new Message(client.getUserName() + ": " +messageText.trim(), new Date().toString());
             queueSendData.add(message);
             sendMessage.setText("");
             sendMessage.positionCaret(0);

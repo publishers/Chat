@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
  * Created by User on 30.01.15.
  */
 public class SocketClient extends Thread {
-    public static final Logger LOG = LoggerFactory.getLogger(SocketClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SocketClient.class);
     private static final String host = "localhost";
     private static final int port = 10222;
 
@@ -86,7 +86,7 @@ public class SocketClient extends Thread {
                 queueGetData.add(obj);
             }
         } catch (IOException | ClassNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Connection info");
+            JOptionPane.showMessageDialog(null, "Connection was closed");
             LOG.info("info: {}", e.getMessage());
         }
     }
