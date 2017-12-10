@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 public class FXMLController implements Initializable {
     private static final Logger LOG = LoggerFactory.getLogger(FXMLController.class);
     private static final int sizeText = 12;
-    private static final String MESSAGE_DIVIDER = "/---------------------------/";
 
     @FXML
     public TextArea connectedUsers;
