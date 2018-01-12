@@ -1,12 +1,13 @@
 package com.chat.server;
 
-import com.chat.server.listener.CommonClientListener;
+import com.chat.server.listener.StreamClientConnection;
+import com.chat.server.listener.ObserverClientListener;
+import com.chat.server.listener.manager.ClientManager;
 import com.chat.server.response.ClientListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.io.IOException;
 
 /**
  * A simple socket server
@@ -14,32 +15,29 @@ import java.net.Socket;
  * @author Serhii Malykhin
  */
 public class SocketServer extends Thread {
-    private static final Logger LOG = LoggerFactory.getLogger(SocketServer.class);
-    private static final Integer PORT = 10222;
-    private static final CommonClientListener OBSERVER = CommonClientListener.newInstance();
-    public static void main(String[] args) {
-        new SocketServer().start();
-    }
+  private static final Logger LOG = LoggerFactory.getLogger(SocketServer.class);
 
-    @Override
-    public void run() {
-        ServerSocket serverSocket;
+  public static void main(String[] args) {
+    new SocketServer().start();
+  }
+
+  @Override
+  public void run() {
+    try {
+      ObserverClientListener clientObserver = ObserverClientListener.newInstance();
+      ClientManager clientManager = new ClientManager();
+      while (!clientManager.isConnectionClosed()) {
         try {
-            serverSocket = new ServerSocket(PORT);
-            while (!serverSocket.isClosed()) {
-                try {
-                    LOG.info("Wait1 ... ");
-                    Socket socket = serverSocket.accept();
-
-                    ClientListener clientListener = ClientListener.newInstance(socket, OBSERVER);
-                    clientListener.start();
-                } catch (Exception e) {
-                    LOG.error("SocketServer: {}", e.getMessage());
-                    e.printStackTrace();
-                }
-            }
+          StreamClientConnection streamClientConnection = clientManager.awaitClient();
+          ClientListener clientListener = ClientListener.newInstance(streamClientConnection, clientObserver);
+          clientListener.start();
         } catch (Exception e) {
-            LOG.error("Cannot establish connection. Server may not be up. Reason {}", e.getMessage());
+          LOG.error("SocketServer: {}", e.getMessage());
         }
+      }
+      clientManager.closedConnection();
+    } catch (IOException e) {
+      LOG.error("Cannot establish connection. Server may not be up. Reason {}", e.getMessage());
     }
+  }
 }

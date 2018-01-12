@@ -10,25 +10,33 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
-
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chat.controller.FXMLController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chat.controller.FXMLController">
     <children>
         <Pane prefHeight="527.0" prefWidth="1124.0" styleClass="background" stylesheets="@css.css">
             <children>
-                <TextArea fx:id="showMessagesDialog" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0" prefWidth="386.0" />
-                <WebView fx:id="htmlMessageView" layoutX="635.0" layoutY="57.0" prefHeight="373.0" prefWidth="475.0" />
-                <TextArea fx:id="sendMessage" layoutX="22.0" layoutY="356.0" onKeyPressed="#pressEnter" prefHeight="119.0" prefWidth="386.0" promptText="Type your message here ..." />
-                <TextArea fx:id="connectedUsers" editable="false" layoutX="418.0" layoutY="57.0" prefHeight="373.0" prefWidth="200.0" />
-                <TextField fx:id="userName" layoutX="417.0" layoutY="11.0" prefHeight="32.0" prefWidth="200.0" promptText="your name" />
-                <Button layoutX="418.0" layoutY="436.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="39.0" prefWidth="200.0" styleClass="Button" text="Send">
-               <font>
-                  <Font size="20.0" />
-               </font></Button>
-                <Button layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#connect" styleClass="Button" text="Connect to the Server" />
-                <Button layoutX="200.0" layoutY="14.0" mnemonicParsing="false" onAction="#disconnect" styleClass="Button" text="Disconnect" />
+                <TextArea fx:id="showMessagesDialog" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0"
+                          prefWidth="386.0"/>
+                <WebView fx:id="htmlMessageView" layoutX="635.0" layoutY="57.0" prefHeight="373.0" prefWidth="475.0"/>
+                <TextArea fx:id="sendMessage" layoutX="22.0" layoutY="356.0" onKeyPressed="#pressEnter"
+                          prefHeight="119.0" prefWidth="386.0" promptText="Type your message here ..."/>
+                <TextArea fx:id="connectedUsers" editable="false" layoutX="418.0" layoutY="57.0" prefHeight="373.0"
+                          prefWidth="200.0"/>
+                <TextField fx:id="userName" layoutX="417.0" layoutY="11.0" prefHeight="32.0" prefWidth="200.0"
+                           promptText="your name"/>
+                <Button layoutX="418.0" layoutY="436.0" mnemonicParsing="false" onAction="#sendMessage"
+                        prefHeight="39.0" prefWidth="200.0" styleClass="Button" text="Send">
+                    <font>
+                        <Font size="20.0"/>
+                    </font>
+                </Button>
+                <Button layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#connect" styleClass="Button"
+                        text="Connect to the Server"/>
+                <Button layoutX="200.0" layoutY="14.0" mnemonicParsing="false" onAction="#disconnect"
+                        styleClass="Button" text="Disconnect"/>
                 <Label layoutX="337.0" layoutY="10.0" text="Login :">
                     <font>
-                        <Font size="24.0" />
+                        <Font size="24.0"/>
                     </font>
                 </Label>
 
@@ -36,9 +44,9 @@
         </Pane>
     </children>
     <columnConstraints>
-        <ColumnConstraints />
+        <ColumnConstraints/>
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints />
+        <RowConstraints/>
     </rowConstraints>
 </GridPane>

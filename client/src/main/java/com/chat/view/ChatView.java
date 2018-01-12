@@ -13,16 +13,16 @@ import java.util.Objects;
 
 public class ChatView extends Application {
 
-    public static void main(String... args) {
-        launch(args);
-    }
+  public static void main(String... args) {
+    launch(args);
+  }
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Interface.fxml")));
-        Scene scene = new Scene(parent);
-        stage.setTitle("Welcome to chat");
-        stage.setScene(scene);
-        stage.show();
-    }
+  @Override
+  public void start(Stage stage) throws Exception {
+    Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("Interface.fxml")));
+    Scene scene = new Scene(parent);
+    stage.setTitle("Welcome to chat");
+    stage.setScene(scene);
+    stage.show();
+  }
 }
