@@ -1,86 +1,106 @@
 package com.chat.socket.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.chat.service.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-import javax.swing.JOptionPane;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.concurrent.BlockingQueue;
 
 // TODO: need to separate connection and read/write actions
-public class ClientConnection extends Thread {
-  private static final Logger LOG = LoggerFactory.getLogger(ClientConnection.class);
-  private static final String HOST = "localhost";
-  private static final int PORT = 10222;
-  private static final String MESSAGE_CONNECTION_WAS_CLOSED = "Connection was closed or unavailable. \nPlease check internet connection";
+@Component
+@Slf4j
+public class ClientConnection {
+    @Value("${connection.host}")
+    private String HOST;
 
-  private InputStream in = null;
-  private OutputStream out = null;
+    @Value("${connection.port}")
+    private int PORT;
 
-  private Socket socket = null;
-  private BlockingQueue<Object> queueSendData;
-  private BlockingQueue<Object> queueGetData;
+    private InputStream in;
+    private OutputStream out;
 
-  public ClientConnection(BlockingQueue<Object> queueSendData, BlockingQueue<Object> queueGetData) {
-    this.queueGetData = queueGetData;
-    this.queueSendData = queueSendData;
-  }
+    private Socket socket;
 
-  private void serverConnection() throws IOException {
-    socket = new Socket(HOST, PORT);
-    out = socket.getOutputStream();
-    in = socket.getInputStream();
-  }
+    @Autowired
+    @Qualifier("objectResponseService")
+    private Service<Object> messageResponseService;
 
-  public void disconnectFromServer() throws IOException {
-    if (socket != null && socket.isConnected()) {
-      socket.close();
-      socket = null;
-      Thread.currentThread().interrupt();
-      System.gc();
-    }
-  }
+    @Autowired
+    @Qualifier("objectRequestService")
+    private Service<Object> messageRequestService;
 
-  public Socket getSocket() {
-    return socket;
-  }
+    private Thread currentThread;
 
-  public void run() {
-    try {
-      serverConnection();
-      ObjectOutputStream outputStream = new ObjectOutputStream(out);
-      ObjectInputStream inputStream = new ObjectInputStream(in);
-      Thread thread = new Thread(() -> {
-        Object object = null;
-        while (true) {
-          try {
-            object = queueSendData.take();
-            if (!socket.isClosed()) {
-              outputStream.writeObject(object);
-              outputStream.flush();
-            }
-          } catch (InterruptedException e) {
-            LOG.info("Cannot got message: {}", object);
-          } catch (IOException e) {
-            LOG.info("Cannot send message: {}", object);
-          }
+    public void disconnectFromServer() throws IOException {
+        if (socket != null && socket.isConnected() && !socket.isClosed()) {
+            in.close();
+            out.close();
+            socket.close();
+            currentThread.interrupt();
+            System.gc();
         }
-      });
-      thread.setDaemon(true);
-      thread.start();
-      while (!socket.isClosed()) {
-        Object obj = inputStream.readObject();
-        LOG.info("Object: {}", obj.toString());
-        queueGetData.add(obj);
-      }
-    } catch (IOException | ClassNotFoundException e) {
-      JOptionPane.showMessageDialog(null, MESSAGE_CONNECTION_WAS_CLOSED);
-      LOG.error("info: {}", e.getMessage());
     }
-  }
+
+    public boolean isSocketClosed() {
+        return socket == null || (socket.isClosed() && socket.isConnected());
+    }
+
+    public void start() {
+        currentThread = new Thread(() -> {
+            try {
+                connectToServer();
+                ObjectOutputStream outputStream = new ObjectOutputStream(out);
+                ObjectInputStream inputStream = new ObjectInputStream(in);
+                Thread thread = new Thread(sendData(outputStream));
+                thread.setDaemon(true);
+                thread.start();
+                while (!(socket.isInputShutdown() && socket.isOutputShutdown())) {
+                    Object obj = inputStream.readObject();
+                    log.info("Object: {}", obj);
+                    messageResponseService.send(obj);
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                log.error("info: {}", e.getMessage());
+            }
+        });
+        currentThread.start();
+    }
+
+    private void connectToServer() throws IOException {
+        socket = new Socket();
+        socket.connect(new InetSocketAddress(HOST, PORT));
+        out = socket.getOutputStream();
+        in = socket.getInputStream();
+    }
+
+    private Runnable sendData(ObjectOutputStream outputStream) {
+        return () -> {
+            while (true) {
+                Object object = messageRequestService.receive();
+                log.info("receive message: {}", object);
+                sendData(outputStream, object);
+            }
+        };
+    }
+
+    private void sendData(ObjectOutputStream outputStream, Object object) {
+        if (!socket.isClosed()) {
+            try {
+                outputStream.writeObject(object);
+                outputStream.flush();
+            } catch (IOException e) {
+                log.info("Cannot send message: {}", object);
+                log.error("Cause message: {}", e);
+            }
+        }
+    }
 }

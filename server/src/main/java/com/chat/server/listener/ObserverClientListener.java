@@ -8,48 +8,45 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * @author Serhii_Malykhin
- */
 public class ObserverClientListener {
 
-  private List<ClientListener> clientListeners;
+    private List<ClientListener> clientListeners;
 
-  private static ObserverClientListener listener;
+    private static ObserverClientListener listener;
 
-  private ObserverClientListener() {
-    clientListeners = Collections.synchronizedList(new LinkedList<>());
-  }
-
-  public static ObserverClientListener newInstance() {
-    if (listener == null) {
-      listener = new ObserverClientListener();
+    private ObserverClientListener() {
+        clientListeners = Collections.synchronizedList(new LinkedList<>());
     }
-    return listener;
-  }
 
-  public void sendMessage(Object object) {
-    clientListeners.forEach(client -> {
-      if (object instanceof Client) {
-        client.sendMessage(buildClientList());
-      } else {
-        client.sendMessage(object);
-      }
-    });
-  }
+    public static ObserverClientListener newInstance() {
+        if (listener == null) {
+            listener = new ObserverClientListener();
+        }
+        return listener;
+    }
 
-  private List<Client> buildClientList() {
-    return clientListeners.stream()
-        .map(ClientListener::getClient)
-        .collect(Collectors.toList());
-  }
+    public void sendMessage(Object object) {
+        clientListeners.forEach(client -> {
+            if (object instanceof Client) {
+                client.sendMessage(buildClientList());
+            } else {
+                client.sendMessage(object);
+            }
+        });
+    }
 
-  public void removeClientListener(ClientListener clientListener) {
-    clientListeners.remove(clientListener);
-  }
+    private List<Client> buildClientList() {
+        return clientListeners.stream()
+                .map(ClientListener::getClient)
+                .collect(Collectors.toList());
+    }
 
-  public void add(ClientListener clientListener) {
-    clientListeners.add(clientListener);
-  }
+    public void removeClientListener(ClientListener clientListener) {
+        clientListeners.remove(clientListener);
+    }
+
+    public void add(ClientListener clientListener) {
+        clientListeners.add(clientListener);
+    }
 
 }

@@ -1,0 +1,5 @@
+ui:
+  title: Chat
+connection:
+  host: localhost
+  port: 10222

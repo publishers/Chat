@@ -15,15 +15,27 @@
     </modules>
     <properties>
         <javafx.version>2017.11.0</javafx.version>
-        <common.version>1.0</common.version>
+        <common.version>1.1</common.version>
         <server.version>1.0</server.version>
         <client.version>1.0</client.version>
         <slf4j.version>1.7.21</slf4j.version>
         <slf4j.api.version>1.7.5</slf4j.api.version>
         <slf4j.log.version>1.5.6</slf4j.log.version>
+        <spring.boot.version>1.5.9.RELEASE</spring.boot.version>
+        <lombok.version>1.16.20</lombok.version>
     </properties>
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.wildfly.swarm/javafx -->
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
@@ -53,7 +65,7 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
-                <!--<version>${slf4j.log.version}</version>-->
+                <version>${slf4j.log.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -73,7 +85,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.chat.view.ChatView</mainClass>
+                            <mainClass>com.chat.configuration.AbstractJavaFxApplicationSupport</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -85,6 +97,22 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
