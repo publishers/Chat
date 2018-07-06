@@ -1,17 +1,16 @@
-package com.chat.service;
+package com.chat.service.impl;
 
+import com.chat.service.ObjectTransfer;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
-/**
- * @author Serhii Malykhin
- */
 @Getter
-@org.springframework.stereotype.Service
-public class ObjectRequestService implements Service<Object> {
+@Service
+public class RequestObjectTransfer implements ObjectTransfer<Object> {
 
     @Autowired
     @Qualifier("requestLinkedBlockingQueue")

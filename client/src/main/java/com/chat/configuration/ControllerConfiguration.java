@@ -1,7 +1,7 @@
 package com.chat.configuration;
 
-import com.chat.controller.FXMLController;
-import com.chat.socket.client.ClientConnection;
+import com.chat.controller.ViewController;
+import com.chat.service.impl.ClientServiceImpl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import lombok.AllArgsConstructor;
@@ -28,10 +28,10 @@ public class ControllerConfiguration {
         return new LinkedBlockingQueue<>();
     }
 
-    @Bean("clientConnection")
+    @Bean("clientService")
     @Scope(value = "singleton")
-    public ClientConnection clientConnection() {
-        return new ClientConnection();
+    public ClientServiceImpl clientConnection() {
+        return new ClientServiceImpl();
     }
 
     @Bean("mainView")
@@ -44,8 +44,8 @@ public class ControllerConfiguration {
 
     @Bean
     @Scope(value = "singleton")
-    public FXMLController fxmlController() throws IOException {
-        return (FXMLController) getMainView().getController();
+    public ViewController fxmlController() throws IOException {
+        return (ViewController) getMainView().getController();
     }
 
     @Data
