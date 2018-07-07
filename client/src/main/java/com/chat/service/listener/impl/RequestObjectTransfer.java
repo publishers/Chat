@@ -1,6 +1,6 @@
-package com.chat.service.impl;
+package com.chat.service.listener.impl;
 
-import com.chat.service.ObjectTransfer;
+import com.chat.service.listener.ObjectTransfer;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

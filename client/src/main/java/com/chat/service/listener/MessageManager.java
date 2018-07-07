@@ -1,4 +1,4 @@
-package com.chat.service;
+package com.chat.service.listener;
 
 public interface MessageManager {
 }

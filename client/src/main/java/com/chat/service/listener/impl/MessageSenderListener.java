@@ -1,6 +1,6 @@
-package com.chat.service.impl;
+package com.chat.service.listener.impl;
 
-import com.chat.service.ObjectTransfer;
+import com.chat.service.listener.ObjectTransfer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -8,11 +8,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 @Slf4j
-public class MessageSenderManager extends AbstractMessageManager {
+public class MessageSenderListener extends AbstractMessageListener {
 
     private ObjectTransfer requestObjectTransfer;
 
-    public MessageSenderManager(ObjectTransfer requestObjectTransfer, Socket socket) {
+    public MessageSenderListener(ObjectTransfer requestObjectTransfer, Socket socket) {
         super(socket);
         this.requestObjectTransfer = requestObjectTransfer;
     }
@@ -23,8 +23,10 @@ public class MessageSenderManager extends AbstractMessageManager {
             while (!socket.isClosed()) {
                 Object object = requestObjectTransfer.receive();
                 log.info("responseObjectTransfer message: {}", object);
-                outputStream.writeObject(object);
-                outputStream.flush();
+                if (!socket.isClosed()) {
+                    outputStream.writeObject(object);
+                    outputStream.flush();
+                }
             }
         } catch (IOException e) {
             log.error("Cause message: {}", e);

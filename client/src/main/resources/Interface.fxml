@@ -10,7 +10,7 @@
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chat.controller.ViewController">
     <children>
-        <Pane prefHeight="527.0" prefWidth="1124.0" styleClass="background" stylesheets="@css.css">
+        <Pane prefHeight="527.0" prefWidth="1124.0" styleClass="background" stylesheets="@style/css.css">
             <children>
                 <TextArea fx:id="showMessagesDialog" editable="false" layoutX="23.0" layoutY="57.0" prefHeight="291.0"
                           prefWidth="386.0"/>

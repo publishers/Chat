@@ -15,4 +15,5 @@ public interface ClientService {
 
     void activateConnection();
 
+    boolean isConnectionOpen();
 }

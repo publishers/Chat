@@ -1,4 +1,4 @@
-package com.chat.service.impl;
+package com.chat.service.listener.impl;
 
 import com.chat.service.distributor.MessageManager;
 import lombok.extern.slf4j.Slf4j;
@@ -8,11 +8,11 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 @Slf4j
-public class MessageReceiverManager extends AbstractMessageManager {
+public class MessageReceiverListener extends AbstractMessageListener {
 
     private MessageManager messageManager;
 
-    public MessageReceiverManager(MessageManager messageManager, Socket socket) {
+    public MessageReceiverListener(MessageManager messageManager, Socket socket) {
         super(socket);
         this.messageManager = messageManager;
     }

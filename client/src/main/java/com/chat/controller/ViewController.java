@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.net.URL;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -65,6 +66,10 @@ public class ViewController implements Initializable {
         messageManager.getData().forEach((key, value) -> value.init(areaMap.get(key)));
     }
 
+    @PreDestroy
+    public void destroy() {
+        clientService.disconnect();
+    }
     @FXML
     private void disconnect() {
         clientService.disconnect();
@@ -85,7 +90,7 @@ public class ViewController implements Initializable {
     @FXML
     private void sendMessage() {
         String textMessage = sendMessage.getText();
-        if (isMessageCorrect(textMessage)) {
+        if (isMessageCorrect(textMessage) && clientService.isConnectionOpen()) {
             sendMessage.setText("");
             sendMessage.positionCaret(0);
             Message message = new Message(textMessage.trim(), new Date().toString());

@@ -5,8 +5,10 @@ import com.chat.model.Client;
 import com.chat.model.Message;
 import com.chat.service.ClientService;
 import com.chat.service.ConnectorService;
-import com.chat.service.ObjectTransfer;
 import com.chat.service.distributor.MessageManager;
+import com.chat.service.listener.ObjectTransfer;
+import com.chat.service.listener.impl.MessageReceiverListener;
+import com.chat.service.listener.impl.MessageSenderListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,15 +27,14 @@ public class ClientServiceImpl implements ClientService {
     private String host;
 
     @Autowired
-    @Qualifier("responseObjectTransfer")
-    private ObjectTransfer responseObjectTransfer;
-
-    @Autowired
     @Qualifier("requestObjectTransfer")
     private ObjectTransfer requestObjectTransfer;
 
     @Autowired
     private MessageManager messageManager;
+
+    private MessageSenderListener senderManager;
+    private MessageReceiverListener receiverManager;
 
     private ConnectorService connectorService;
 
@@ -44,6 +45,10 @@ public class ClientServiceImpl implements ClientService {
         if (connectorService != null && connectorService.isConnected()) {
             connectorService.disconnect();
             connectorService = null;
+            senderManager.interrupt();
+            senderManager = null;
+            receiverManager.interrupt();
+            receiverManager = null;
         }
     }
 
@@ -69,12 +74,16 @@ public class ClientServiceImpl implements ClientService {
             connectorService = new ConnectorServiceImpl(host, port);
             connectorService.connect();
             Socket socket = connectorService.getSocket();
-            MessageSenderManager t1 = new MessageSenderManager(requestObjectTransfer, socket);
-            t1.start();
-            MessageReceiverManager t2 = new MessageReceiverManager(messageManager, socket);
-            t2.start();
+            senderManager = new MessageSenderListener(requestObjectTransfer, socket);
+            senderManager.start();
+            receiverManager = new MessageReceiverListener(messageManager, socket);
+            receiverManager.start();
             requestObjectTransfer.send(client);
         }
     }
 
+    @Override
+    public boolean isConnectionOpen() {
+        return connectorService != null && connectorService.isConnected();
+    }
 }
