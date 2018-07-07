@@ -1,6 +1,7 @@
 package com.chat.service.distributor;
 
 import com.chat.distribute.Distributor;
+import com.chat.model.Client;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class MessageManager {
     @Value("#{dispatcherMap}")
     private Map<Class, Distributor> data;
 
-    public void manageMessage(Object obj) {
+    public void manager(Object obj, Client client) {
         if (Objects.isNull(obj)) return;
         Distributor distributor = data.get(obj.getClass());
         if (distributor == null) {
@@ -26,8 +27,7 @@ public class MessageManager {
             }
         }
         if (!Objects.isNull(distributor)) {
-            distributor.distribute(obj);
+            distributor.distribute(obj, client);
         }
     }
-
 }

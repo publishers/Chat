@@ -1,6 +1,7 @@
 package com.chat.configuration;
 
 import com.chat.controller.ViewController;
+import com.chat.service.ClientService;
 import com.chat.service.impl.ClientServiceImpl;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -30,7 +31,7 @@ public class ControllerConfiguration {
 
     @Bean("clientService")
     @Scope(value = "singleton")
-    public ClientServiceImpl clientConnection() {
+    public ClientService clientConnection() {
         return new ClientServiceImpl();
     }
 

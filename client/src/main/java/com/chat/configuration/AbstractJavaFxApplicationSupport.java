@@ -1,7 +1,4 @@
 package com.chat.configuration;
-/**
- * Created by User on 29.01.15.
- */
 
 import javafx.application.Application;
 import org.springframework.boot.SpringApplication;

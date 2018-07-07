@@ -1,7 +1,9 @@
 package com.chat.distribute;
 
-public interface Distributor<T> {
+import com.chat.model.Client;
+
+public interface Distributor<T, R> {
     void init(T t);
 
-    void distribute(Object obj);
+    void distribute(R obj, Client client);
 }

@@ -2,7 +2,11 @@ package com.chat;
 
 import com.chat.configuration.AbstractJavaFxApplicationSupport;
 import com.chat.configuration.ControllerConfiguration.ViewHolder;
+import com.chat.controller.ViewController;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,11 +25,27 @@ public class Application extends AbstractJavaFxApplicationSupport {
 
     @Override
     public void start(Stage stage) {
+        GridPane parent = (GridPane) viewHolder.getView();
+        WebView webView = initWebView();
+        ((Pane) parent.getChildren().get(0)).getChildren().add(webView);
+        Scene scene = new Scene(parent);
         stage.setTitle(windowTitle);
-        stage.setScene(new Scene(viewHolder.getView()));
+        stage.setScene(scene);
         stage.setResizable(true);
         stage.centerOnScreen();
         stage.show();
+    }
+
+    private WebView initWebView() {
+        WebView webView = new WebView();
+        webView.setLayoutX(635);
+        webView.setLayoutY(57);
+        webView.setPrefWidth(475);
+        webView.setPrefHeight(373);
+
+        ViewController controller = (ViewController) viewHolder.getController();
+        controller.htmlMessageView = webView;
+        return webView;
     }
 
     public static void main(String[] args) {

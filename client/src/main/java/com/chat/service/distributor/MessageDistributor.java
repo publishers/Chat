@@ -1,6 +1,7 @@
 package com.chat.service.distributor;
 
 import com.chat.distribute.Distributor;
+import com.chat.model.Client;
 import com.chat.model.Message;
 import javafx.scene.control.TextArea;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MessageDistributor implements Distributor<TextArea> {
+public class MessageDistributor implements Distributor<TextArea, Message> {
 
     private TextArea messagesDialog;
 
@@ -20,15 +21,15 @@ public class MessageDistributor implements Distributor<TextArea> {
     }
 
     @Override
-    public void distribute(Object obj) {
-        Message message = (Message) obj;
+    public void distribute(Message message, Client client) {
         messagesDialog.setText(updateTextArea(message));
     }
 
     private String updateTextArea(Message message) {
         return new StringBuilder()
-                .append(message.getSendTime())
+                .append(message.getTime())
                 .append(System.lineSeparator())
+                .append(message.getClient().getUserName()).append(':')
                 .append(message.getMessage())
                 .append(System.lineSeparator())
                 .append(messagesDialog.getText().trim())

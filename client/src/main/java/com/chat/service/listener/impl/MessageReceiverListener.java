@@ -1,5 +1,6 @@
 package com.chat.service.listener.impl;
 
+import com.chat.model.Client;
 import com.chat.service.distributor.MessageManager;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,8 +13,11 @@ public class MessageReceiverListener extends AbstractMessageListener {
 
     private MessageManager messageManager;
 
-    public MessageReceiverListener(MessageManager messageManager, Socket socket) {
+    private Client client;
+
+    public MessageReceiverListener(MessageManager messageManager, Client client, Socket socket) {
         super(socket);
+        this.client = client;
         this.messageManager = messageManager;
     }
 
@@ -28,7 +32,7 @@ public class MessageReceiverListener extends AbstractMessageListener {
                     log.error("Class not found: {}", e);
                 }
                 log.info("Object: {}", obj);
-                messageManager.manageMessage(obj);
+                messageManager.manager(obj, client);
             }
         } catch (IOException e) {
             log.error("Cause message: {}", e);

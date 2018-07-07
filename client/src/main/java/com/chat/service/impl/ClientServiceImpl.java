@@ -9,6 +9,7 @@ import com.chat.service.distributor.MessageManager;
 import com.chat.service.listener.ObjectTransfer;
 import com.chat.service.listener.impl.MessageReceiverListener;
 import com.chat.service.listener.impl.MessageSenderListener;
+import com.chat.utils.ErrorSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,6 +56,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void sendMessage(Message message) {
         log.info("Message: {}", message);
+        message.setClient(client);
         requestObjectTransfer.send(message);
     }
 
@@ -74,12 +76,20 @@ public class ClientServiceImpl implements ClientService {
             connectorService = new ConnectorServiceImpl(host, port);
             connectorService.connect();
             Socket socket = connectorService.getSocket();
-            senderManager = new MessageSenderListener(requestObjectTransfer, socket);
-            senderManager.start();
-            receiverManager = new MessageReceiverListener(messageManager, socket);
-            receiverManager.start();
-            requestObjectTransfer.send(client);
+            if (connectorService.isConnected()) {
+                initListeners(socket);
+                requestObjectTransfer.send(client);
+            } else {
+                ErrorSender.sendError(messageManager);
+            }
         }
+    }
+
+    private void initListeners(Socket socket) {
+        senderManager = new MessageSenderListener(requestObjectTransfer, socket);
+        senderManager.start();
+        receiverManager = new MessageReceiverListener(messageManager, client, socket);
+        receiverManager.start();
     }
 
     @Override

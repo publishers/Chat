@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDistributor implements Distributor<TextArea> {
+public class ClientDistributor implements Distributor<TextArea, List<Client>> {
 
     private TextArea connectedUsers;
 
@@ -23,10 +23,13 @@ public class ClientDistributor implements Distributor<TextArea> {
     }
 
     @Override
-    public void distribute(Object obj) {
-        List<Client> clients = (List<Client>) obj;
+    public void distribute(List<Client> clients, Client client) {
+        client.update(clients.stream()
+                .filter(clientF -> clientF.equals(client))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(client.toString())));
         connectedUsers.setText(clients.stream()
-                .map(client -> client.getUserName())
+                .map(Client::getUserName)
                 .collect(Collectors.joining(System.lineSeparator())));
     }
 }

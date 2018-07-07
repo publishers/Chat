@@ -1,9 +1,11 @@
 package com.chat.controller;
 
+import com.chat.distribute.Distributor;
 import com.chat.model.Client;
 import com.chat.model.Message;
 import com.chat.service.ClientService;
 import com.chat.service.distributor.MessageManager;
+import com.chat.utils.PublicMessages;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -12,14 +14,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import javafx.scene.web.WebView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.net.URL;
-import java.util.Date;
-import java.util.LinkedHashMap;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -30,16 +32,15 @@ import static com.chat.utils.ChatValidator.isUserNickCorrect;
 public class ViewController implements Initializable {
     private static final int TEXT_SIZE = 12;
 
+    public WebView htmlMessageView;
     @FXML
-    public TextArea connectedUsers;
+    public TextArea userView;
     @FXML
     public TextArea sendMessage;
     @FXML
-    public TextArea showMessagesDialog;
+    public TextArea messagesView;
     @FXML
     public TextField userName;
-
-    private Map<Class, TextArea> areaMap;
 
     @Autowired
     private ClientService clientService;
@@ -49,41 +50,44 @@ public class ViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        connectedUsers.setFont(Font.font("Verdana", FontPosture.ITALIC, TEXT_SIZE));
-        showMessagesDialog.setFont(Font.font("Verdana", FontPosture.ITALIC, TEXT_SIZE));
-        userName.setFont(Font.font("Verdana", FontPosture.ITALIC, TEXT_SIZE));
+        Font font = Font.font("Verdana", FontPosture.ITALIC, TEXT_SIZE);
+        userView.setFont(font);
+        messagesView.setFont(font);
+        userName.setFont(font);
 
         sendMessage.setWrapText(true);
-        showMessagesDialog.setWrapText(true);
-
-        areaMap = new LinkedHashMap<>();
-        areaMap.put(Client.class, connectedUsers);
-        areaMap.put(Message.class, showMessagesDialog);
+        messagesView.setWrapText(true);
     }
 
     @PostConstruct
     public void init() {
-        messageManager.getData().forEach((key, value) -> value.init(areaMap.get(key)));
+        Map<Class, Distributor> distributorMap = messageManager.getData();
+        distributorMap.get(Client.class).init(userView);
+        distributorMap.get(Message.class).init(messagesView);
     }
 
     @PreDestroy
     public void destroy() {
         clientService.disconnect();
     }
+
     @FXML
     private void disconnect() {
         clientService.disconnect();
+        messagesView.setText(PublicMessages.DISCONNECTED_MESSAGE);
+        userView.setText(PublicMessages.BLANK);
     }
 
     @FXML
     private void connect() {
         String userName = this.userName.getText();
         if (isUserNickCorrect(userName) && !clientService.isClientRegistered()) {
+            messagesView.setText(PublicMessages.BLANK);
             Client client = new Client(userName);
             clientService.registerClient(client);
             clientService.activateConnection();
         } else {
-            showMessagesDialog.setText("You have bad userName: " + userName);
+            messagesView.setText("You have bad userName: " + userName);
         }
     }
 
@@ -93,8 +97,10 @@ public class ViewController implements Initializable {
         if (isMessageCorrect(textMessage) && clientService.isConnectionOpen()) {
             sendMessage.setText("");
             sendMessage.positionCaret(0);
-            Message message = new Message(textMessage.trim(), new Date().toString());
+            Message message = new Message(textMessage.trim(), LocalDateTime.now());
             clientService.sendMessage(message);
+        } else if (!clientService.isConnectionOpen()) {
+            messagesView.setText(PublicMessages.SERVER_NOT_AVAILABLE);
         }
     }
 

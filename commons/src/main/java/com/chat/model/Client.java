@@ -7,12 +7,10 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * @author Serhii_Malykhin
- */
 @Data
 public class Client implements Serializable {
     public static final long serialVersionUID = 0L;
+    private transient static Client client;
     private String uuid;
     private ConnectionStatus status;
     private String userName;
@@ -21,6 +19,17 @@ public class Client implements Serializable {
         this.userName = userNick;
         this.status = ConnectionStatus.DISCONNECTED;
         this.uuid = UUID.randomUUID().toString();
+    }
+
+    public static Client notConnected() {
+        if (client == null) {
+            client = new Client("Not Connected");
+        }
+        return client;
+    }
+
+    public void update(Client client) {
+        this.status = client.getStatus();
     }
 
     @Override
