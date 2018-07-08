@@ -62,7 +62,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean isClientRegistered() {
-        return client != null && client.getStatus() == ConnectionStatus.CONNECTED;
+        return client != null && connectorService != null && connectorService.isConnected() && client.getStatus() == ConnectionStatus.CONNECTED;
     }
 
     @Override

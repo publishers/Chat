@@ -19,6 +19,9 @@ public class Application extends AbstractJavaFxApplicationSupport {
     @Value("${ui.title}")
     private String windowTitle;
 
+    @Value("${ui.form}")
+    private String htmlMessageUIForm;
+
     @Autowired
     @Qualifier("mainView")
     private ViewHolder viewHolder;
@@ -38,10 +41,13 @@ public class Application extends AbstractJavaFxApplicationSupport {
 
     private WebView initWebView() {
         WebView webView = new WebView();
-        webView.setLayoutX(635);
+        webView.setLayoutX(23);
         webView.setLayoutY(57);
-        webView.setPrefWidth(475);
-        webView.setPrefHeight(373);
+        webView.setPrefWidth(386);
+        webView.setPrefHeight(291);
+        webView.getEngine().setJavaScriptEnabled(true);
+        webView.getEngine()
+                .load(getClass().getClassLoader().getResource(htmlMessageUIForm).toString());
 
         ViewController controller = (ViewController) viewHolder.getController();
         controller.htmlMessageView = webView;

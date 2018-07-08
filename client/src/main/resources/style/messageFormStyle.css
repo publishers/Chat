@@ -1,0 +1,29 @@
+#messages {
+    width: 388px;
+    padding: 10px 0 0 0;
+}
+
+.testButton {
+    display: none;
+}
+
+#timePosition {
+    color: grey;
+    font-size: 10px;
+    margin: -12px 0px 0px 0px;
+}
+
+#messageStyle {
+    height: auto;
+    background-color: #0000;
+    padding: 1px 20px 5px 15px;
+    margin-bottom: 25px;
+}
+
+#message {
+    word-wrap: break-word;
+    width: 211px;
+    height: auto;
+    background-color: #bfe9f9;
+    padding: 1px 20px 5px 15px;
+}

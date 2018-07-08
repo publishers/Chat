@@ -1,5 +1,6 @@
 ui:
   title: Chat
+  form: messageForm.html
 connection:
   host: localhost
   port: 10222

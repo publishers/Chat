@@ -63,7 +63,6 @@ public class ViewController implements Initializable {
     public void init() {
         Map<Class, Distributor> distributorMap = messageManager.getData();
         distributorMap.get(Client.class).init(userView);
-        distributorMap.get(Message.class).init(messagesView);
     }
 
     @PreDestroy
@@ -82,10 +81,12 @@ public class ViewController implements Initializable {
     private void connect() {
         String userName = this.userName.getText();
         if (isUserNickCorrect(userName) && !clientService.isClientRegistered()) {
+            messageManager.getData().get(Message.class).init(htmlMessageView);
             messagesView.setText(PublicMessages.BLANK);
             Client client = new Client(userName);
             clientService.registerClient(client);
             clientService.activateConnection();
+            messagesView.setText(PublicMessages.CONNECTED_MESSAGE);
         } else {
             messagesView.setText("You have bad userName: " + userName);
         }
