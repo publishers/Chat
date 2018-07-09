@@ -6,9 +6,12 @@ This chat was created to take some practice using Threads and IO.
 Also, there is using Observer pattern to provide messages for all users using the app.
 
 About technologies:
+- Spring Framework
 - Java8
 - JavaFX
 - CSS
+- HTML
+- JS
 
 This chat can be modern using html pattern to improv display messages for user(wiht adding smiles links).
 Also There can be:
